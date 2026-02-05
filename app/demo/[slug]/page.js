@@ -1,7 +1,7 @@
 export async function generateMetadata({ searchParams }) {
   const name = searchParams.name || "Votre Entreprise";
   const domain = searchParams.domain || "google.com";
-   const logoUrl = `/api/logo?domain=${domain}`;
+  const logoUrl = `/api/logo?domain=${domain}`;
 
   return {
     title: `Analyse de Performance - ${name}`,
