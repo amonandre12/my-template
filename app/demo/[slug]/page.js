@@ -1,8 +1,38 @@
+export async function generateMetadata({ searchParams }) {
+  const name = searchParams.name || "Votre Entreprise";
+  const domain = searchParams.domain || "google.com";
+   const logoUrl = `/api/logo?domain=${domain}`;
+
+  return {
+    title: `Analyse de Performance - ${name}`,
+    description: `Découvrez comment nous avons boosté la vitesse de ${name} avec Next.js.`,
+    // C'est ici que la magie opère pour WhatsApp (OpenGraph)
+    openGraph: {
+      title: `Refonte Digitale : ${name}`,
+      description: `Cliquez pour voir la démonstration haute performance pour ${name}.`,
+      images: [
+        {
+          url: logoUrl, // Le logo du client s'affiche dans la bulle WhatsApp !
+          width: 800,
+          height: 600,
+          alt: `Logo ${name}`,
+        },
+      ],
+      type: 'website',
+    },
+    // Empêche Google d'indexer ces pages de démo privées
+    robots: {
+      index: false,
+      follow: true,
+    }
+  };
+}
+
 // app/demo/[slug]/page.js
 
 export default function DemoPage({ searchParams }) {
   // On récupère les variables passées dans l'URL par Make/Snov.io
-  const name = searchParams.name || "votre entreprise";
+  const name = searchParams.name || "Votre entreprise";
   const color = 
   searchParams.color && /^[0-9A-Fa-f]{6}$/.test(searchParams.color) ? searchParams.color : "3b82f6";
   const oldScore = searchParams.oldScore || "20"; 
